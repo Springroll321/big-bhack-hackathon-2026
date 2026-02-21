@@ -1,3 +1,5 @@
+const { global } = require("styled-jsx/css");
+
 // HOME PAGE (upload)
 const uploadInput = document.getElementById("file-upload");
 
@@ -23,11 +25,29 @@ const viewer = document.getElementById("pdfViewer");
 
 if (viewer) {
   const url = sessionStorage.getItem("pdfURL");
-
+  resetTimer();
   if (!url) {
     alert("No PDF uploaded. Go back and choose a file.");
   } else {
     // Use 'src' for <embed> instead of 'data'
     viewer.src = url;
   }
+
+  
+}
+var counter;
+function resetTimer(){
+  counter = new Date(date.getDate() + 60000);
+}
+
+function updateTimer(){
+  var now = new Date();
+  var diff = counter - now;
+  if(diff <= 0){
+    alert("Time's up! Please take a break.");
+    resetTimer();
+  }
+  var minutes = Math.floor(diff / 60000);
+  var seconds = Math.floor((diff % 60000) / 1000);
+  document.getElementById("timer").textContent = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 }
